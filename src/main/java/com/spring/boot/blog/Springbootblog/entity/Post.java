@@ -21,7 +21,7 @@ public class Post {
     @GeneratedValue(
             strategy = GenerationType.IDENTITY
     )
-    private Long id;
+    private long id;
     private String title;
     private String description;
     private String content;

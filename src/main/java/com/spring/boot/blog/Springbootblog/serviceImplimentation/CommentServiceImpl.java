@@ -10,6 +10,9 @@ import com.spring.boot.blog.Springbootblog.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class CommentServiceImpl implements CommentService {
     @Autowired
@@ -26,6 +29,13 @@ public class CommentServiceImpl implements CommentService {
         //sending a response to the client through the dto object.
         CommentDto commentResponse = mapToDto(newComment);
         return commentResponse;
+    }
+
+    @Override
+    public List<CommentDto> getCommentsByPostId(long postId) {
+//        postRepository.findById(postId).orElseThrow(()-> new ResourceNotFoundException("Post", "id", postId));
+        List<Comment> comments = commentRepository.findByPostsId(postId);
+        return comments.stream().map(comment -> mapToDto(comment)).collect(Collectors.toList());
     }
 
     //converting entity to dto
