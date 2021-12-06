@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class CommentController {
     @Autowired
     private CommentService commentService;
-    @PostMapping("/{id}/comment")
+    @PostMapping("/{id}/create")
     public ResponseEntity<CommentDto> createComment(@PathVariable(value = "id") long id, @RequestBody CommentDto commentDto){
        return new ResponseEntity<>(commentService.createComment(id,commentDto), HttpStatus.CREATED);
     }
