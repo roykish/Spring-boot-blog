@@ -55,12 +55,15 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PageResponse getAllPosts(int pageNo, int pageSize, String sortBy) {
+    public PageResponse getAllPosts(int pageNo, int pageSize, String sortBy, String sortDir) {
+
+
 
         /*For pagination, there are two kind of Pageable, one is java.awt.print.Pageable and the
          other one is org.springframework.data.domain.Pageable. We need to use the second one.*/
-
-        Pageable pageable = PageRequest.of(pageNo,pageSize, Sort.by(sortBy));
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending():
+                Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(pageNo,pageSize, sort);
         Page<Post> posts = postRepository.findAll(pageable);
 
         //Everytime there is a page, that page need to fetched by .getContent() method and pass it to the stream.
