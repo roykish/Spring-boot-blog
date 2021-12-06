@@ -1,5 +1,6 @@
 package com.spring.boot.blog.Springbootblog.controller;
 
+import com.spring.boot.blog.Springbootblog.dto.PageResponse;
 import com.spring.boot.blog.Springbootblog.dto.PostDto;
 import com.spring.boot.blog.Springbootblog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,13 @@ public class PostController {
 
     //get all post
     @GetMapping("/allpost")
-    public List<PostDto> getAllPosts(){
-        return postService.getAllPosts();
+    public PageResponse getAllPosts(
+            //adding pagination to find all post (1st step, the second step is in the postService interface)
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue= "10", required = false) int pageSize
+    ){
+
+        return postService.getAllPosts(pageNo, pageSize);
     }
     @GetMapping("/{id}")
     public ResponseEntity<PostDto> findPostById(@PathVariable long id){

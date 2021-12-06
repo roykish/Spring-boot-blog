@@ -1,12 +1,17 @@
 package com.spring.boot.blog.Springbootblog.serviceImplimentation;
 
 import com.spring.boot.blog.Springbootblog.dao.PostRepository;
+import com.spring.boot.blog.Springbootblog.dto.PageResponse;
 import com.spring.boot.blog.Springbootblog.dto.PostDto;
 import com.spring.boot.blog.Springbootblog.entity.Post;
 import com.spring.boot.blog.Springbootblog.exceptions.ResourceNotFoundException;
 import com.spring.boot.blog.Springbootblog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,9 +54,26 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPosts() {
-        List<Post> posts = postRepository.findAll();
-        return posts.stream().map(this::mapToDto).collect(Collectors.toList());
+    public PageResponse getAllPosts(int pageNo, int pageSize) {
+
+        /*For pagination, there are two kind of Pageable, one is java.awt.print.Pageable and the
+         other one is org.springframework.data.domain.Pageable. We need to use the second one.*/
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Post> posts = postRepository.findAll(pageable);
+
+        //Everytime there is a page, that page need to fetched by .getContent() method and pass it to the stream.
+        List<Post> listOfPosts = posts.getContent();
+
+        List<PostDto> content = listOfPosts.stream().map(this::mapToDto).collect(Collectors.toList());
+        PageResponse pageResponse = new PageResponse();
+        pageResponse.setContent(content);
+        pageResponse.setPageNo(posts.getNumber());
+        pageResponse.setPageSize(posts.getSize());
+        pageResponse.setTotalElements(posts.getTotalElements());
+        pageResponse.setTotalPages(posts.getTotalPages());
+        pageResponse.setLast(posts.isLast());
+        return pageResponse;
     }
 
     @Override
