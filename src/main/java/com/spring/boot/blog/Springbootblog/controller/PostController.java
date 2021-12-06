@@ -26,7 +26,8 @@ public class PostController {
             //adding pagination to find all post (1st step, the second step is in the postService interface)
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue= "10", required = false) int pageSize,
-            @RequestParam(value = "sort", defaultValue = "id", required = false) String sortBy
+            @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy
+
     ){
 
         return postService.getAllPosts(pageNo, pageSize,sortBy);
