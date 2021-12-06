@@ -38,6 +38,13 @@ public class CommentServiceImpl implements CommentService {
         return comments.stream().map(comment -> mapToDto(comment)).collect(Collectors.toList());
     }
 
+    @Override
+    public CommentDto getCommentById(long postId, long commentId) {
+        Post post = postRepository.findById(postId).orElseThrow(()-> new ResourceNotFoundException("Post", "id", postId));
+       Comment comment = commentRepository.findById(commentId).orElseThrow(()->new ResourceNotFoundException("Comment", "id", commentId));
+        return null;
+    }
+
     //converting entity to dto
     private CommentDto mapToDto(Comment comment){
         CommentDto commentDto = new CommentDto();
