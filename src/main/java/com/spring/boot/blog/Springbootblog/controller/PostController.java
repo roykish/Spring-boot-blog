@@ -25,10 +25,11 @@ public class PostController {
     public PageResponse getAllPosts(
             //adding pagination to find all post (1st step, the second step is in the postService interface)
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
-            @RequestParam(value = "pageSize", defaultValue= "10", required = false) int pageSize
+            @RequestParam(value = "pageSize", defaultValue= "10", required = false) int pageSize,
+            @RequestParam(value = "sort", defaultValue = "id", required = false) String sortBy
     ){
 
-        return postService.getAllPosts(pageNo, pageSize);
+        return postService.getAllPosts(pageNo, pageSize,sortBy);
     }
     @GetMapping("/{id}")
     public ResponseEntity<PostDto> findPostById(@PathVariable long id){
