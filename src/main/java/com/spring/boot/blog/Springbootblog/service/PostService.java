@@ -3,7 +3,6 @@ package com.spring.boot.blog.Springbootblog.service;
 import com.spring.boot.blog.Springbootblog.dto.PageResponse;
 import com.spring.boot.blog.Springbootblog.dto.PostDto;
 
-import java.util.List;
 
 
 public interface PostService {

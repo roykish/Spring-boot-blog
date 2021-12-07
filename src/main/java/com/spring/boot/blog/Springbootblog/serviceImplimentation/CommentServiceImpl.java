@@ -8,6 +8,7 @@ import com.spring.boot.blog.Springbootblog.entity.Post;
 import com.spring.boot.blog.Springbootblog.exceptions.BlogApiException;
 import com.spring.boot.blog.Springbootblog.exceptions.ResourceNotFoundException;
 import com.spring.boot.blog.Springbootblog.service.CommentService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,8 @@ public class CommentServiceImpl implements CommentService {
     private CommentRepository commentRepository;
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     //updating a comment with specific post ID, the comment ID and the updated comment DTO.
     @Override
@@ -85,21 +88,33 @@ public class CommentServiceImpl implements CommentService {
 
     //converting entity to dto
     private CommentDto mapToDto(Comment comment) {
+        /*
         CommentDto commentDto = new CommentDto();
         commentDto.setId(comment.getId());
         commentDto.setEmail(comment.getEmail());
         commentDto.setName(comment.getName());
         commentDto.setMsgBody(comment.getMsgBody());
+
+        As we are using ModelMapper, we can use this library API to convert the entity to DTO or DTO to entity
+        That is why from line 92-96 is replaced by line bellow.
+         */
+        CommentDto commentDto = modelMapper.map(comment, CommentDto.class);
         return commentDto;
     }
 
     //converting dto to entity
     private Comment mapToEntity(CommentDto commentDto) {
+        /*
         Comment comment = new Comment();
         comment.setId(commentDto.getId());
         comment.setEmail(commentDto.getEmail());
         comment.setName(commentDto.getName());
         comment.setMsgBody(commentDto.getMsgBody());
+
+        As we are using ModelMapper, we can use this library API to convert the entity to DTO or DTO to entity
+        That is why from line 108-112 is replaced by line bellow.
+         */
+        Comment comment = modelMapper.map(commentDto, Comment.class);
         return comment;
     }
 }
