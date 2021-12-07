@@ -11,6 +11,8 @@ public class SpringBootBlogApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootBlogApplication.class, args);
 	}
+
+	//this model mapper is for using model mapper.
 	@Bean
 	public ModelMapper modelmapper(){
 		return new ModelMapper();
