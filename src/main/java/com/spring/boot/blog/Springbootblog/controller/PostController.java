@@ -26,6 +26,7 @@ public class PostController {
     }
 
     //get all post
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/allpost")
     public PageResponse getAllPosts(
             //adding pagination to find all post (1st step, the second step is in the postService interface)

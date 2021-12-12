@@ -1,4 +1,11 @@
 package com.spring.boot.blog.Springbootblog.dao;
 
-public interface RoleRepository {
+import com.spring.boot.blog.Springbootblog.entity.Role;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface RoleRepository extends JpaRepository<Role, Long> {
+    Optional<Role> findByRoleName(Role roleName);
+
 }
