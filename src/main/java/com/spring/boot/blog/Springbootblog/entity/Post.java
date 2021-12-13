@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,11 +17,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "posts")
-public class Post {
+public class Post implements Serializable {
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private String title;
     private String description;
